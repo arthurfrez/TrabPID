@@ -6,6 +6,9 @@ import java.awt.RenderingHints;
 import java.net.URL;
 import javax.swing.BorderFactory;
 import java.lang.Math;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import javax.swing.border.*;
 import javax.swing.*;
 import java.awt.*;
@@ -20,9 +23,6 @@ import java.io.*;
 // http://www.fatecsp.br/dti/tcc/tcc00068.pdf
 // http://docs.opencv.org/2.4/doc/tutorials/introduction/desktop_java/java_dev_intro.html
 // pixelCoordinate = worldCoordinate * 2zoomLevel
-
-// http://stackoverflow.com/questions/9573324/get-zoom-and-center-to-fit-all-markers-in-a-google-static-map
-// /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
 
 class Window implements ActionListener{
   // Atributos
@@ -108,7 +108,7 @@ class Window implements ActionListener{
 
     BufferedImage myPicture = null;
     try {
-      myPicture = ImageIO.read(new File("icon.png"));
+      myPicture = ImageIO.read(new File("src/resources/icon.png"));
     } catch(Exception e) { e.printStackTrace(); }
 
     JLabel picLabel = new JLabel(new ImageIcon(myPicture));
@@ -235,7 +235,7 @@ class Window implements ActionListener{
         // Metodo principal da thread
         public void run() {
           if(!load) {
-            ImageIcon loading = new ImageIcon("load.gif");
+            ImageIcon loading = new ImageIcon("src/resources/load.gif");
             mainPanel.setIcon(loading);
             mainPanel.repaint();
           }
@@ -266,6 +266,40 @@ class Window implements ActionListener{
   }
 
   //----------------------------------------------------------------------------
+  // writeCoordenates: escreve as coordenadas no arquivo
+  //----------------------------------------------------------------------------
+  public void writeCoordenates(String str) {
+    try {
+      BufferedWriter bw = new BufferedWriter(
+        new FileWriter("src/resources/coor.txt", true));
+      bw.write(str);
+      bw.close();
+    }catch (Exception e) { e.printStackTrace(); }
+  }
+
+  //----------------------------------------------------------------------------
+  // getTextValues:
+  //----------------------------------------------------------------------------
+  public String getTextValues() {
+    String resp = t1.getText();
+    return "";
+  }
+
+  //----------------------------------------------------------------------------
+  // getValueAction:
+  //----------------------------------------------------------------------------
+  public void getValueAction() {
+    t1.setVisible(false);
+    t3.setVisible(false);
+    t2.setVisible(false);
+    sep5.setVisible(false);
+    sep6.setVisible(false);
+    sep7.setVisible(false);
+    writeCoordenates(getTextValues()+"\n");
+    buttonPanel.repaint();
+  }
+
+  //----------------------------------------------------------------------------
   // create: cria a janela e os elementos dentro da mesma.
   //----------------------------------------------------------------------------
   public void create() {
@@ -293,15 +327,7 @@ class Window implements ActionListener{
   @Override
   public void actionPerformed(ActionEvent event) {
     if (event.getActionCommand() == Actions.GET_IMAGE.name()) { openFileChooser(); }
-    if (event.getActionCommand() == Actions.GET_VALUE.name()) {
-      t1.setVisible(false);
-      t2.setVisible(false);
-      t3.setVisible(false);
-      sep5.setVisible(false);
-      sep6.setVisible(false);
-      sep7.setVisible(false);
-      buttonPanel.repaint();
-    }
+    if (event.getActionCommand() == Actions.GET_VALUE.name()) { getValueAction(); }
     if (event.getActionCommand() == Actions.OPEN_MAP.name()) { loadMap(); }
     if (event.getActionCommand() == Actions.CLOSE.name()) { window.dispose(); }
   }
