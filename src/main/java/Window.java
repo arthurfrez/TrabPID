@@ -21,6 +21,9 @@ import java.io.*;
 // http://docs.opencv.org/2.4/doc/tutorials/introduction/desktop_java/java_dev_intro.html
 // pixelCoordinate = worldCoordinate * 2zoomLevel
 
+// http://stackoverflow.com/questions/9573324/get-zoom-and-center-to-fit-all-markers-in-a-google-static-map
+// /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+
 class Window implements ActionListener{
   // Atributos
   private BufferedImage image;

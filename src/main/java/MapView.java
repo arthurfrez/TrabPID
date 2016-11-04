@@ -55,7 +55,7 @@ class MapView extends SwingWorker<BufferedImage, Object> {
     if(run) {
       try {
         String url = "https://maps.googleapis.com/maps/api/staticmap?center=" +
-          latitude + "," + longitude + "&zoom=11&size=640x640";
+          latitude + "," + longitude + "&size=640x640";
 
         // le e adiciona marcas ao URL
         if(!markers.isEmpty())
