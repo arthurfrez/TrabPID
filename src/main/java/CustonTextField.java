@@ -36,12 +36,23 @@ class CustonTextField extends JTextField implements FocusListener {
   @Override
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
-
   }
 
   //----------------------------------------------------------------------------
-  // focusGained: metodo da interface FocusListener que "trata" o recebimento de
-  // foco da janela
+  // setVisible: sobrescrevendo o metodo de visibilidade para controle da hint
+  //----------------------------------------------------------------------------
+  @Override
+  public void setVisible(boolean b) {
+    super.setVisible(b);
+
+    showingHint = true;
+    this.setText(hint);
+    this.setForeground(MyConstants.COLOR_4.brighter());
+  }
+
+  //----------------------------------------------------------------------------
+  // focusGained: metodo da interface FocusListener que "trata" o recebimento
+  // de foco da janela
   //----------------------------------------------------------------------------
   @Override
   public void focusGained(FocusEvent e) {
@@ -71,5 +82,14 @@ class CustonTextField extends JTextField implements FocusListener {
   @Override
   public String getText() {
     return showingHint ? "" : super.getText();
+  }
+
+  //----------------------------------------------------------------------------
+  // checkValue: metodo para verificar o valor do textfield
+  //----------------------------------------------------------------------------
+  public boolean checkValue() {
+    if(this.getText() == null || this.getText().equals("")) return false;
+    if(this.getText().equals(this.hint)) return false;
+    return true;
   }
 }

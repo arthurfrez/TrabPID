@@ -32,7 +32,7 @@ class Window implements ActionListener{
   private JLabel mainPanel;
   private JFileChooser fileChooser;
 
-  JTextField t1, t2, t3;
+  CustonTextField t1, t2, t3;
   JSeparator sep5, sep6, sep7;
 
   //----------------------------------------------------------------------------
@@ -79,9 +79,6 @@ class Window implements ActionListener{
     GroupLayout layout = new GroupLayout(buttonPanel);
     buttonPanel.setLayout(layout);
     buttonPanel.setBackground(MyConstants.COLOR_4);
-
-    // Criando "gaps" automaticas
-    //layout.setAutoCreateContainerGaps(true);
 
     // Componentes do GroupLayout
     CustonButton b1 = new CustonButton("Select Image", Actions.GET_IMAGE.name(), this);
@@ -134,9 +131,7 @@ class Window implements ActionListener{
 
     // Layout vertical
     layout.setVerticalGroup(layout.createSequentialGroup()
-      .addGap(20)
-      //.addComponent(picLabel)
-      .addGap(20)
+      .addGap(40)
       .addComponent(b1)
       .addComponent(sep1)
       .addComponent(t1)
@@ -214,6 +209,9 @@ class Window implements ActionListener{
       } catch(Exception e) { System.out.println("ERRO: Arquivo Invalido"); }
 
 
+      t1.setText("");
+      t2.setText("");
+      t3.setText("");
       t1.setVisible(true);
       t2.setVisible(true);
       t3.setVisible(true);
@@ -269,6 +267,8 @@ class Window implements ActionListener{
   // writeCoordenates: escreve as coordenadas no arquivo
   //----------------------------------------------------------------------------
   public void writeCoordenates(String str) {
+    if(str == null) return;
+
     try {
       BufferedWriter bw = new BufferedWriter(
         new FileWriter("src/resources/coor.txt", true));
@@ -278,15 +278,15 @@ class Window implements ActionListener{
   }
 
   //----------------------------------------------------------------------------
-  // getTextValues:
+  // getTextValues: recebe os valores do texto e os checka
   //----------------------------------------------------------------------------
   public String getTextValues() {
-    String resp = t1.getText();
-    return "";
+    if(!t1.checkValue() || !t2.checkValue()) return null;
+    return t1.getText() + t2.getText() + "\n";
   }
 
   //----------------------------------------------------------------------------
-  // getValueAction:
+  // getValueAction: metodo do botao Identify Value
   //----------------------------------------------------------------------------
   public void getValueAction() {
     t1.setVisible(false);
@@ -295,8 +295,9 @@ class Window implements ActionListener{
     sep5.setVisible(false);
     sep6.setVisible(false);
     sep7.setVisible(false);
-    writeCoordenates(getTextValues()+"\n");
     buttonPanel.repaint();
+
+    writeCoordenates(getTextValues());
   }
 
   //----------------------------------------------------------------------------
