@@ -31,6 +31,7 @@ class Window implements ActionListener{
   private JPanel buttonPanel;
   private JLabel mainPanel;
   private JFileChooser fileChooser;
+  private JPanel legenda;
 
   CustonTextField t1, t2, t3;
   JSeparator sep5, sep6, sep7;
@@ -51,6 +52,7 @@ class Window implements ActionListener{
     mainPanel = null;
     fileChooser = null;
     image = null;
+    legenda = null;
   }
 
   //----------------------------------------------------------------------------
@@ -72,6 +74,15 @@ class Window implements ActionListener{
   }
 
   //----------------------------------------------------------------------------
+  // createSubBox:
+  //----------------------------------------------------------------------------
+  private void createSubBox() {
+    legenda = new JPanel();
+    legenda.setOpaque(false);
+    legenda.setBorder(BorderFactory.createTitledBorder("Legenda"));
+  }
+
+  //----------------------------------------------------------------------------
   // createButtonPanel: cria o painel que contem os botoes e os mesmos.
   //----------------------------------------------------------------------------
   private void createButtonPanel() {
@@ -81,6 +92,7 @@ class Window implements ActionListener{
     buttonPanel.setBackground(MyConstants.COLOR_4);
 
     // Componentes do GroupLayout
+    createSubBox();
     CustonButton b1 = new CustonButton("Select Image", Actions.GET_IMAGE.name(), this);
     CustonButton b2 = new CustonButton("Identify Value", Actions.GET_VALUE.name(), this);
     CustonButton b3 = new CustonButton("Open Map", Actions.OPEN_MAP.name(), this);
@@ -127,6 +139,7 @@ class Window implements ActionListener{
       .addComponent(sep3, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
       .addComponent(b4, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
       .addComponent(sep4, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+      .addComponent(legenda, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
     );
 
     // Layout vertical
@@ -146,6 +159,8 @@ class Window implements ActionListener{
       .addComponent(sep3)
       .addComponent(b4)
       .addComponent(sep4)
+      .addGap(20)
+      .addComponent(legenda)
     );
   }
 
@@ -255,9 +270,9 @@ class Window implements ActionListener{
 
 
     MapView map = new MapView(image, mainPanel, "-20.0113562", "-44.0912681");
-    map.marker("-20.0113562", "-44.0912681");
-    map.marker("-19.971031", "-44.034286");
-    map.marker("-19.946022", "-44.111534");
+    map.marker("-20.0113562", "-44.0912681", 'A');
+    map.marker("-19.971031", "-44.034286", 'B');
+    map.marker("-19.946022", "-44.111534", 'C');
     map.execute();
     loadingAnimation(map.getLoad());
     mainPanel.repaint();
