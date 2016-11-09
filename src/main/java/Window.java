@@ -74,12 +74,27 @@ class Window implements ActionListener{
   }
 
   //----------------------------------------------------------------------------
-  // createSubBox:
+  // imgDataBoxesVisibility:
+  //----------------------------------------------------------------------------
+  private void imgDataBoxesVisibility(boolean b) {
+    t1.setVisible(b);
+    t2.setVisible(b);
+    t3.setVisible(b);
+    sep5.setVisible(b);
+    sep6.setVisible(b);
+    sep7.setVisible(b);
+  }
+
+  //----------------------------------------------------------------------------
+  // createSubBox: cria a 'caixa' de legenda
   //----------------------------------------------------------------------------
   private void createSubBox() {
     legenda = new JPanel();
     legenda.setOpaque(false);
-    legenda.setBorder(BorderFactory.createTitledBorder("Legenda"));
+    TitledBorder b = BorderFactory.createTitledBorder(
+      new LineBorder(MyConstants.COLOR_4.brighter()), "Legenda");
+    b.setTitleColor(Color.WHITE);
+    legenda.setBorder(b);
   }
 
   //----------------------------------------------------------------------------
@@ -108,12 +123,7 @@ class Window implements ActionListener{
     sep6 = custonSeparator();
     sep7 = custonSeparator();
 
-    t1.setVisible(false);
-    t2.setVisible(false);
-    t3.setVisible(false);
-    sep5.setVisible(false);
-    sep6.setVisible(false);
-    sep7.setVisible(false);
+    imgDataBoxesVisibility(false);
 
     BufferedImage myPicture = null;
     try {
@@ -227,12 +237,7 @@ class Window implements ActionListener{
       t1.setText("");
       t2.setText("");
       t3.setText("");
-      t1.setVisible(true);
-      t2.setVisible(true);
-      t3.setVisible(true);
-      sep5.setVisible(true);
-      sep6.setVisible(true);
-      sep7.setVisible(true);
+      imgDataBoxesVisibility(true);
       buttonPanel.repaint();
       mainPanel.repaint();
     }
@@ -260,12 +265,7 @@ class Window implements ActionListener{
   // loadMap: carrega o mapa
   //----------------------------------------------------------------------------
   public void loadMap() {
-    t1.setVisible(false);
-    t2.setVisible(false);
-    t3.setVisible(false);
-    sep5.setVisible(false);
-    sep6.setVisible(false);
-    sep7.setVisible(false);
+    imgDataBoxesVisibility(false);
     buttonPanel.repaint();
 
 
@@ -304,12 +304,7 @@ class Window implements ActionListener{
   // getValueAction: metodo do botao Identify Value
   //----------------------------------------------------------------------------
   public void getValueAction() {
-    t1.setVisible(false);
-    t3.setVisible(false);
-    t2.setVisible(false);
-    sep5.setVisible(false);
-    sep6.setVisible(false);
-    sep7.setVisible(false);
+    imgDataBoxesVisibility(false);
     buttonPanel.repaint();
 
     writeCoordenates(getTextValues());
