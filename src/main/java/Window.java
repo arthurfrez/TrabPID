@@ -7,6 +7,8 @@ import java.net.URL;
 import javax.swing.BorderFactory;
 import java.lang.Math;
 import java.io.BufferedWriter;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.File;
 import java.io.FileWriter;
 import javax.swing.border.*;
@@ -52,7 +54,6 @@ class Window implements ActionListener{
     mainPanel = null;
     fileChooser = null;
     image = null;
-    legenda = null;
   }
 
   //----------------------------------------------------------------------------
@@ -95,6 +96,7 @@ class Window implements ActionListener{
       new LineBorder(MyConstants.COLOR_4.brighter()), "Legenda");
     b.setTitleColor(Color.WHITE);
     legenda.setBorder(b);
+    legenda.setVisible(false);
   }
 
   //----------------------------------------------------------------------------
@@ -233,10 +235,6 @@ class Window implements ActionListener{
         mainPanel.setIcon(new ImageIcon(image));
       } catch(Exception e) { System.out.println("ERRO: Arquivo Invalido"); }
 
-
-      t1.setText("");
-      t2.setText("");
-      t3.setText("");
       imgDataBoxesVisibility(true);
       buttonPanel.repaint();
       mainPanel.repaint();
@@ -262,17 +260,44 @@ class Window implements ActionListener{
   }
 
   //----------------------------------------------------------------------------
+  // loadAndMark: le do arquivo as marcas e coloca no mapa
+  //----------------------------------------------------------------------------
+  private void loadAndMark(MapView map) {
+    try {
+      BufferedReader leitor = new BufferedReader(
+        new FileReader("src/resources/coor.txt"));
+      String s;
+      int cont = 0;
+
+      // lendo do arquivo
+      while((s = leitor.readLine()) != null) {
+        String[] ss = s.split(" ");
+
+        // definindo qual a marca
+        char c = (char)('A'+cont);
+        cont++;
+        map.marker(c, ss[0], ss[1]);
+        legenda.add(new JLabel(""+c));
+      }
+
+      leitor.close();
+    }
+    catch(Exception e) { e.printStackTrace(); }
+
+    legenda.revalidate();
+    legenda.setVisible(true); // <-----------------------------------------------------------------------------------------------------------
+  }
+
+  //----------------------------------------------------------------------------
   // loadMap: carrega o mapa
   //----------------------------------------------------------------------------
-  public void loadMap() {
+  private void loadMap() {
     imgDataBoxesVisibility(false);
     buttonPanel.repaint();
 
 
     MapView map = new MapView(image, mainPanel, "-20.0113562", "-44.0912681");
-    map.marker("-20.0113562", "-44.0912681", 'A');
-    map.marker("-19.971031", "-44.034286", 'B');
-    map.marker("-19.946022", "-44.111534", 'C');
+    loadAndMark(map);
     map.execute();
     loadingAnimation(map.getLoad());
     mainPanel.repaint();
@@ -281,7 +306,7 @@ class Window implements ActionListener{
   //----------------------------------------------------------------------------
   // writeCoordenates: escreve as coordenadas no arquivo
   //----------------------------------------------------------------------------
-  public void writeCoordenates(String str) {
+  private void writeCoordenates(String str) {
     if(str == null) return;
 
     try {
@@ -295,7 +320,7 @@ class Window implements ActionListener{
   //----------------------------------------------------------------------------
   // getTextValues: recebe os valores do texto e os checka
   //----------------------------------------------------------------------------
-  public String getTextValues() {
+  private String getTextValues() {
     if(!t1.checkValue() || !t2.checkValue()) return null;
     return t1.getText() + t2.getText() + "\n";
   }

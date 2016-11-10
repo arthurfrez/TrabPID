@@ -63,7 +63,7 @@ set CMD_LINE_ARGS=%*
 :execute
 @rem Setup the command line
 
-set CLASSPATH=%APP_HOME%\lib\trabPID-0.1.2.jar;%APP_HOME%\lib\google-maps-services-0.1.16.jar;%APP_HOME%\lib\gson-2.3.1.jar;%APP_HOME%\lib\okhttp-2.7.5.jar;%APP_HOME%\lib\joda-time-2.4.jar;%APP_HOME%\lib\okio-1.6.0.jar
+set CLASSPATH=%APP_HOME%\lib\trabPID-0.1.2.jar
 
 @rem Execute TrabPID
 "%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %TRAB_PID_OPTS%  -classpath "%CLASSPATH%" Main %CMD_LINE_ARGS%

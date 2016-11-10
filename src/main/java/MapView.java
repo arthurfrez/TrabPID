@@ -35,7 +35,7 @@ class MapView extends SwingWorker<BufferedImage, Object> {
   //----------------------------------------------------------------------------
   // marker: adiciona uma marca ao mapa
   //----------------------------------------------------------------------------
-  public void marker(String lat, String lon, char label) {
+  public void marker(char label, String lat, String lon) {
     markers.add("&markers=color:red%7Clabel:"+ label + "%7C" + lat + ","+ lon);
   }
 
