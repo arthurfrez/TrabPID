@@ -13,4 +13,6 @@ repositories {
 }
 
 dependencies {
+  //compile 'gov.nih.imagej:imagej:1.47'
+  compile 'net.imagej:ij:1.51h'
 }

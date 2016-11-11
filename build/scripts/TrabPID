@@ -64,7 +64,7 @@ case "`uname`" in
     ;;
 esac
 
-CLASSPATH=$APP_HOME/lib/trabPID-0.1.2.jar
+CLASSPATH=$APP_HOME/lib/trabPID-0.1.2.jar:$APP_HOME/lib/ij-1.51h.jar
 
 # Determine the Java command to use to start the JVM.
 if [ -n "$JAVA_HOME" ] ; then

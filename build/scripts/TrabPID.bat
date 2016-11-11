@@ -63,7 +63,7 @@ set CMD_LINE_ARGS=%*
 :execute
 @rem Setup the command line
 
-set CLASSPATH=%APP_HOME%\lib\trabPID-0.1.2.jar
+set CLASSPATH=%APP_HOME%\lib\trabPID-0.1.2.jar;%APP_HOME%\lib\ij-1.51h.jar
 
 @rem Execute TrabPID
 "%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %TRAB_PID_OPTS%  -classpath "%CLASSPATH%" Main %CMD_LINE_ARGS%

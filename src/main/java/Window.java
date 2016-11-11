@@ -18,6 +18,10 @@ import java.awt.event.*;
 import javax.swing.event.*;
 import java.io.*;
 
+import ij.ImagePlus;
+import ij.process.ImageConverter;
+import ij.process.ImageProcessor;
+
 // REF: https://material.google.com/
 // http://danilotl.com.br/blog/reconhecendo-caracteres-em-imagens-com-java-e-tess4j/
 // https://en.wikipedia.org/wiki/Optical_character_recognition
@@ -232,6 +236,10 @@ class Window implements ActionListener{
       //tenta ler a imagem
       try {
         image = ImageIO.read(file);
+        /*ImagePlus huezord = new ImagePlus("heya", image);
+        ImageConverter ic = new ImageConverter(huezord);
+        ic.convertToGray32();
+        image = huezord.getBufferedImage();*/
         mainPanel.setIcon(new ImageIcon(image));
       } catch(Exception e) { System.out.println("ERRO: Arquivo Invalido"); }
 
@@ -277,7 +285,12 @@ class Window implements ActionListener{
         char c = (char)('A'+cont);
         cont++;
         map.marker(c, ss[0], ss[1]);
-        legenda.add(new JLabel(""+c));
+        JLabel mk = new JLabel(""+c);
+        Border b1 =  BorderFactory.createEmptyBorder(4,8,4,8);
+        Border b2 = BorderFactory.createLineBorder(Color.WHITE);
+        mk.setForeground(Color.WHITE);
+        mk.setBorder(BorderFactory.createCompoundBorder(b2, b1));
+        legenda.add(mk);
       }
 
       leitor.close();
